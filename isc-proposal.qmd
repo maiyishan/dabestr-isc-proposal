@@ -1,5 +1,5 @@
 ---
-title: "Refactoring and rework of dabestr"
+title: "Modernization of dabestr"
 author:
   - name: Yishan Mai
     orcid: 0000-0002-7199-380X
