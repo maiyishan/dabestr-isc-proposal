@@ -1,10 +1,10 @@
 ---
-title: "Proposal Title"
+title: "Refactoring and rework of dabestr"
 author:
-  - name: Annie Easley
-    orcid: 5555-5555-5555-5555
+  - name: Yishan Mai
+    orcid: 0000-0002-7199-380X
     affiliations:
-      - "Lewis Research Center, National Aeronautics and Space Administration"
+      - "Duke-NUS Medical School, Singapore"
 
 date: today
 date-format: iso
