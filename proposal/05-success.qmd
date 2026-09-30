@@ -9,14 +9,20 @@ thorough understanding going in of what the risks are to delivery
 What does success look like?
 -->
 
+The S7 result object and accessors are implemented, documented, and tested; all regression checks pass for every supported design and estimand, including rendered figures; plotting reads only the documented object; existing scripts and tutorials run unmodified with a warning-based deprecation path and migration guide; the delta–delta input interface is simplified; and the release is on CRAN with documentation, changelog, and contributor guide live.
+
 ## Measuring success
 <!--
 How will we know when success is achieved, what markers can we use
 along the way
 -->
 
+Each milestone is reported publicly against its acceptance check. Along the way: the regression corpus stays green in CI; the Milestone 1 design draws community comment that is addressed before implementation; the remaining delta–delta requests (multiplex, pooled variance) are scoped as tractable additions on the new architecture; and, after release, other packages, reports, or plotting layers use the public accessors.
+
 ## Future work
 <!--
 How could this be extended / developed in the future by yourself
 and/or the community in general?
 -->
+
+The architecture is designed to make the following cheaper for the team and community, though none is a deliverable here: new methods on the roadmap (revised permutation algorithm, multiplex and pooled-variance delta–delta, sina plots for large samples); alternative or ggplot2-native plotting layers and reporting tools built on the result object; new estimands, designs, and resampling procedures through stable interfaces; and harmonization with DABEST-Python.

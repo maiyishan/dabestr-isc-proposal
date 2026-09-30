@@ -17,6 +17,8 @@ section.
 Include concrete actions you will take and estimated timeline.
 -->
 
+We separate the entangled layers of the package (data → design → contrast/estimand → resampling/inference → presentation) into explicit, documented components and reconnect them through a stable contract. Scope is architecture and interface, not new methods. A defining advantage is that the correct behaviour already exists: for every supported design and estimand we can freeze current point estimates, bootstrap distributions, confidence intervals, permutation results, and graphical semantics, and require the modernized code to reproduce them. This removes most scientific risk and makes each milestone objectively checkable. The community gains a stable, tidy-friendly interface to estimation results, a lower barrier to building on dabestr, and a faster path to long-requested features.
+
 ## Detail
 <!--
 Go into more detail about the specifics of the project and how it delivers
@@ -31,11 +33,15 @@ Depending on project type the detail section should include:
 What is the smallest thing you can build that delivers value to your users?
 -->
 
+Milestones 1–3: a published architecture specification, the frozen regression corpus, and the standardized S7 result object with tidy accessors for effect sizes, intervals, and resampling distributions, reproducing current outputs.
+
 ### Architecture
 
 <!--
 What does the high-level architecture look like?
 -->
+
+Five explicit layers: data (observations, groups, subject IDs); design (grouping and comparison structure, paired, delta–delta, mini-meta, proportions); contrast/estimand (the effect size and how groups are compared); resampling/inference (bootstrap, permutation, intervals); and presentation (panels, labels, colours). The result object is an S7 class with documented fields and accessors; plotting reads only this object. The historical load() |> effectsize() |> dabestplot() workflow is preserved through a compatibility layer.
 
 ### Assumptions
 
@@ -43,8 +49,12 @@ What does the high-level architecture look like?
 What assumptions are you making that, if proven false, would invalidate the project?
 -->
 
+current outputs are the correct target, so a frozen corpus defines “unchanged behaviour”; S7 is stable and acceptable to CRAN and users; the existing workflow can be preserved with a warning-based deprecation path; and a maintainer is available for about 0.4 FTE over nine months.
+
 ### External dependencies
 
 <!--
 What external dependencies does the project have (e.g. libraries, services, other projects, etc.)?
 -->
+
+S7; dabestr’s existing plotting and data-handling dependencies; a testing framework and GitHub Actions CI; CRAN review; the nbdev-derived documentation pipeline; DABEST-Python as a conceptual reference only.
