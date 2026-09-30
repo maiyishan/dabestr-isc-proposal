@@ -4,3 +4,9 @@
 This section provides a condensed view of the entire proposal, one page long.
 It should be a comprehensive high-level overview that captures the essence of the proposal, including its goals, methods, expected outcomes, deliverables, and budget.
 -->
+
+dabestr is the principal R implementation of estimation statistics (a data-analysis framework that reports effect sizes and confidence intervals in place of null-hypothesis significance testing). It is hosted on CRAN and downloadable from GitHub and implements methods published across two Nature Methods papers(Ho et al. 2019; Lu et al. 2026). Over successive releases it has grown from two-group mean differences into a feature-rich package spanning repeated measures, delta–delta (2×2) designs, mini-meta analysis, and binary proportions.
+
+That growth has outpaced the package’s original architecture. Daberstr contains fist class statistical concepts wrapped in less than first-class software. They are encoded implicitly across the arguments of a single entry-point function, a set of design flags, and a heterogeneous result object that the plotting layer inspects directly. The result of such organic growth is a package that works but is increasingly hard to extend, test, and integrate with the rest of the R ecosystem.
+
+We propose a focused modernization that makes the existing statistical grammar explicit: a documented, standardized, composable estimation-result object, with computation cleanly separated from visualization, validated against the current implementation as a frozen regression target, and released with full backward compatibility. Instead of new methodology, we want to consolidate the engineering, which keeps scientific risk low while producing reusable and reliable infrastructure that other R packages and visualization systems can build on.

@@ -21,4 +21,21 @@ It is important to cover:
 -->
 ```
 
+Estimation statistics has become a mainstream alternative to significance testing across the life and behavioural sciences, reinforced by journal policy changes and a growing tool ecosystem. dabestr is the main way R users produce estimation analyses and plots. But the package exposes no stable, documented representation of an estimation result. A completed analysis is a large list carrying, simultaneously, raw data, comparison indices, control/test summaries, bootstrap and permutation results, design flags, and plotting configuration (labels, limits, colour mappings). The same object serves as analysis specification, results container, data carrier, design record, and plot configuration all at once.
+
+Two structural consequences follow:
+
+Data ingestion, experimental design, and analysis configuration are collapsed into one entry point. The load() function now encodes grouping structure, comparison structure (idx), paired/repeated-measures design, subject identifiers, proportional outcomes, mini-meta analysis, and delta–delta analysis. Each new method has historically been added as another argument, flag, or specialized code path rather than as an explicit component of a shared model.
+Visualization is coupled to internal statistical state. The plotting layer branches on whether an analysis is delta–delta or mini-meta, on the number and structure of comparison groups, and on other design-specific fields, then assembles the panels accordingly. Presentation logic therefore depends on knowledge of the internal object rather than on a documented contract.
+
+## Why is it a problem, and who does it affect?
+
+Users cannot reliably program against results — extracting effect sizes, intervals, or bootstrap distributions for downstream reporting means reaching into undocumented internal structure that can change between releases.
+The maintainers face rising per-feature cost. Our own roadmap illustrates this directly: delta–delta alone has accumulated three separate open requests (simplify its input interface; support a “multiplex” form; support pooled variance between control and test groups). Each currently implies bespoke input handling and plotting logic. This is the accumulation pattern in miniature.
+The wider R ecosystem cannot easily consume estimation results. Because there is no standardized, tidy-friendly result object, alternative or ggplot2-native plotting layers, report-generation tools, and other statistical packages cannot build on dabestr output without depending on its internals.
+
+## What will solving it enable?
+
+A documented estimation-result object turns dabestr from a self-contained analysis-and-plot tool into reusable infrastructure: results become ordinary, inspectable, composable R objects; visualization becomes one consumer of a public contract rather than a privileged insider; and future estimands, designs, resampling procedures, and plotting systems can plug into stable interfaces instead of adding specialized pathways. It also enables principled harmonization of concepts with DABEST-Python where that serves users, without forcing non-idiomatic R.
+
 An example in-text citation [@wickham2016].
