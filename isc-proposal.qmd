@@ -1,14 +1,12 @@
 ---
 title: "Modernization of dabestr"
-author:
+authors:
   - name: Yishan Mai
     orcid: 0000-0002-7199-380X
     affiliations:
       - "Duke-NUS Medical School, Singapore"
-
-author:
   - name: Sangyu Xu
-    orcid: 0000-0002-7199-380X
+    orcid: 0000-0002-4927-9204
     affiliations:
       - "Duke-NUS Medical School, Singapore"
 
