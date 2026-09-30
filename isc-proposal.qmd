@@ -6,6 +6,12 @@ author:
     affiliations:
       - "Duke-NUS Medical School, Singapore"
 
+author:
+  - name: Sangyu Xu
+    orcid: 0000-0002-7199-380X
+    affiliations:
+      - "Duke-NUS Medical School, Singapore"
+
 date: today
 date-format: iso
 format:

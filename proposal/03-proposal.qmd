@@ -33,7 +33,7 @@ Depending on project type the detail section should include:
 What is the smallest thing you can build that delivers value to your users?
 -->
 
-Milestones 1–3: a published architecture specification, the frozen regression corpus, and the standardized S7 result object with tidy accessors for effect sizes, intervals, and resampling distributions, reproducing current outputs.
+Milestones 1–3 under Project Plan, below: a published architecture specification, the frozen baseline, and the standardized S7 result object with tidy accessors for effect sizes, intervals, and resampling distributions, reproducing current outputs.
 
 ### Architecture
 
@@ -41,7 +41,7 @@ Milestones 1–3: a published architecture specification, the frozen regression 
 What does the high-level architecture look like?
 -->
 
-Five explicit layers: data (observations, groups, subject IDs); design (grouping and comparison structure, paired, delta–delta, mini-meta, proportions); contrast/estimand (the effect size and how groups are compared); resampling/inference (bootstrap, permutation, intervals); and presentation (panels, labels, colours). The result object is an S7 class with documented fields and accessors; plotting reads only this object. The historical load() |> effectsize() |> dabestplot() workflow is preserved through a compatibility layer.
+Five explicit layers: data (observations, groups, subject IDs); design (grouping and comparison structure, paired, delta–delta, mini-meta, proportions); contrast/estimand (the effect size and how groups are compared); resampling/inference (bootstrap, permutation, intervals); and presentation (panels, labels, colours). The result object is an S7 class with documented fields and accessors; plotting reads only this object. The historical load() → effectsize() → dabestplot() workflow is preserved through a compatibility layer.
 
 ### Assumptions
 
@@ -49,7 +49,7 @@ Five explicit layers: data (observations, groups, subject IDs); design (grouping
 What assumptions are you making that, if proven false, would invalidate the project?
 -->
 
-current outputs are the correct target, so a frozen corpus defines “unchanged behaviour”; S7 is stable and acceptable to CRAN and users; the existing workflow can be preserved with a warning-based deprecation path; and a maintainer is available for about 0.4 FTE over nine months.
+Current outputs are the correct target, so a frozen baseline defines “unchanged behaviour”; S7 is stable and acceptable to CRAN and users; the existing workflow can be preserved with a warning-based deprecation path; and a maintainer is available for about 0.4 FTE over nine months.
 
 ### External dependencies
 
