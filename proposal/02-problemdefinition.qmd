@@ -45,4 +45,4 @@ A documented estimation-result object turns dabestr from a self-contained analys
 
 dabestr is itself the behavioural reference this project preserves; DABEST-Python and estimationstats.com implement the same methods for other audiences. General R packages cover pieces of the workflow (e.g. boot and infer for resampling, effectsize and emmeans for effect sizes, ggdist for distribution graphics), but to our knowledge none offers a documented result object for bootstrap-coupled estimation designs that a separate plotting layer can consume. 
 
-An example in-text citation [@wickham2016].
+An example in-text citation [@ho2019].
