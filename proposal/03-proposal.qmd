@@ -17,7 +17,7 @@ section.
 Include concrete actions you will take and estimated timeline.
 -->
 
-We separate the entangled layers of the package (data → design → contrast/estimand → resampling/inference → presentation) into explicit, documented components and reconnect them through a stable contract. Scope is architecture and interface, not new methods. A defining advantage is that the correct behaviour already exists: for every supported design and estimand we can freeze current point estimates, bootstrap distributions, confidence intervals, permutation results, and graphical semantics, and require the modernized code to reproduce them. This removes most scientific risk and makes each milestone objectively checkable. The community gains a stable, tidy-friendly interface to estimation results, a lower barrier to building on dabestr, and a faster path to long-requested features.
+We separate the entangled layers of the package (data → design → contrast/estimand → resampling/inference → presentation) into explicit, documented components. Scope is architecture and interface, not new methods. A defining advantage is that the correct behaviour already exists: for every supported design and estimand we can freeze current point estimates, bootstrap distributions, confidence intervals, permutation results, and graphical semantics, and require the modernized code to reproduce them. This removes most scientific risk and makes each milestone objectively checkable. The community gains a stable, tidy-friendly interface to estimation results, a lower barrier to building on dabestr, and a faster path to long-requested features.
 
 ## Detail
 <!--

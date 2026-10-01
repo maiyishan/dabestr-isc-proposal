@@ -18,7 +18,7 @@ to the project. Include public artifacts such as code repositories to
 show their tack record.
 -->
 
-dabestr is developed by the Claridge-Chang lab (ACCLAB) at Duke-NUS Medical School and collaborators, who authored the methods it implements and also maintain DABEST-Python and estimationstats.com. One primary developer (about 0.4 FTE over 9 months) will come from the existing maintainer team, with design review and statistical validation from the co-applicants at no cost to the grant.
+dabestr is developed by the Claridge-Chang lab (ACCLAB) at Duke-NUS Medical School and collaborators, who authored the methods it implements and also maintain DABEST-Python and estimationstats.com. One primary developer will come from the existing maintainer team, with design review and statistical validation from the co-applicants at no cost to the grant.
 
 Track record: github.com/ACCLAB/dabestr (CRAN), github.com/ACCLAB/DABEST-Python, estimationstats.com, and the two papers in References [@ho2019;@lu2026].
 

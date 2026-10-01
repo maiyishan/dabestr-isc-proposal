@@ -21,19 +21,17 @@ It is important to cover:
 -->
 ```
 
-Estimation statistics has become a mainstream alternative to significance testing across life sciences and behavioural sciences, reinforced by journal policy changes and a growing tool ecosystem. dabestr provides a key avenue for R users to conduct estimation analyses and produce estimation plots. But the package exposes no stable, documented representation of an estimation result. A completed analysis is a large list carrying, simultaneously, raw data, comparison indices, control/test summaries, bootstrap and permutation results, design flags, and plotting configuration (labels, limits, colour mappings). The same object serves as analysis specification, results container, data carrier, design record, and plot configuration all at once.
+Estimation statistics has become a mainstream alternative to significance testing across life sciences and behavioural sciences, reinforced by journal policy changes and a growing tool ecosystem. dabestr provides a key avenue for R users to conduct estimation analyses and produce estimation plots. However, the package does not provide a stable, documented representation of an estimation result for access to other libraries. A completed analysis is a large list carrying, simultaneously, raw data, comparison indices, control/test summaries, bootstrap and permutation results, design flags, and plotting configuration (labels, limits, colour mappings). The same object serves as analysis specification, results container, data carrier, design record, and plot configuration all at once.
 
 Two structural consequences follow:
 
 **1. Data loading, experimental design, and analysis configuration are collapsed into one entry point.** The load() function now encodes grouping structure, comparison structure (idx), paired/repeated-measures design, subject identifiers, proportional outcomes, mini-meta analysis, and delta–delta analysis. Each new method has historically been added as another argument, flag, or specialized code path rather than as an explicit component of a shared model.
 
-**2. Visualization is coupled to internal statistical state.** The plotting layer branches on whether an analysis is delta–delta or mini-meta, on the number and structure of comparison groups, and on other design-specific fields, then assembles the panels accordingly. Presentation logic therefore depends on knowledge of the internal object rather than on a documented statistical object.
+**2. Visualization is coupled to internal statistical state.** The plotting layer branches on whether an analysis is delta–delta or mini-meta, on the number and structure of comparison groups, and on other design-specific fields, then assembles the panels accordingly. Presentation logic therefore depends on knowledge of the internal object rather than on a documented, publically accessible statistical object.
 
 ### Why is it a problem, and who does it affect?
 
 Users cannot reliably program against results — extracting effect sizes, intervals, or bootstrap distributions for downstream reporting means reaching into undocumented internal structure that can change between releases.
-
-The maintainers face rising per-feature cost. Our own roadmap illustrates this directly: delta–delta alone has accumulated three separate open requests (simplify its input interface; support a “multiplex” form; support pooled variance between control and test groups). Each currently implies bespoke input handling and plotting logic. This is an example of the pattern of feature accumulation.
 
 The wider R ecosystem cannot easily process estimation results. Because there is no standardized, tidy-friendly result object, alternative or ggplot2-native plotting layers, report-generation tools, and other statistical packages cannot build on dabestr output without depending on its internals.
 

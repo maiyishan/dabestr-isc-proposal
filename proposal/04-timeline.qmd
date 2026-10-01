@@ -11,8 +11,6 @@ important because projects need to get up and running quickly.
  - [ ] License decisions
  - [ ] Reporting framework
 -->
-The project separates the currently-entangled layers of the package — data → design → contrast/estimand → resampling/inference → presentation — into explicit, documented components, then reconnects them through a stable contract. We deliberately scope the work to architecture and interface, not new statistical methods.
-
 dabestr already exists as a full package and Github repository, so the project can be started straight away. A defining advantage is that the correct behaviour already exists. The current package is a rich regression specification: for every supported design and estimand we can freeze current point estimates, bootstrap distributions, confidence intervals, permutation results, and graphical semantics, and require the modernized code to reproduce them. This removes most of the scientific risk and makes each milestone objectively checkable. 
 
 
@@ -25,17 +23,17 @@ Including target dates is really important as you need to be committed
 and the ISC need to have a means of tracking delivery
 -->
 
-Milestone 1 — Architecture specification and result-object schema (Month 1–2). Deliverable: a public design document (published to the package website and opened as an RFC issue) specifying (a) the separation of design, contrast, estimate, and analysis concepts; (b) the fields, classes, and accessor methods of a standardized result object (implemented with the S7 class system); and (c) the documented contract between analysis output and visualization input. Acceptance: design document merged; community comment period opened; committee-visible.
+Milestone 1 — Write the plan (Month 1–2). Write a public design document (published to the package website and opened as an RFC issue) specifying what a result contains, how to get information out of it, and how plots will use it. Acceptance: design document published; community comment period opened; committee-visible.
 
-Milestone 2 — Reference regression corpus (Month 2–3). Deliverable: a frozen corpus of current outputs across all supported designs and estimands (two-group, repeated measures, delta–delta, mini-meta, proportions), covering point estimates, bootstrap distributions, CIs, permutation results, and key graphical semantics, wired into CI. Acceptance: corpus reproducible from a tagged commit; CI green.
+Milestone 2 — Reference regression corpus (Month 2–3). Deliverable: Record today’s outputs (estimates, intervals, figures) for every supported analysis as automatic tests (the “regression corpus”). Acceptance: corpus reproducible from a tagged commit.
 
-Milestone 3 — Standardized result object with decoupled computation (Month 3–5). Deliverable: the estimation-result object implemented, with computation producing it independently of any plotting concern; public accessors for effect sizes, intervals, and resampling distributions returning tidy data. Acceptance: all Milestone-2 regression checks pass; documented accessors covered by tests.
+Milestone 3 — Build the new standardized result object (Month 3–5). Create the new result object, separate from plotting, with simple functions that return effect sizes, intervals, and resampled data as tidy tables. Acceptance: all Milestone-2 regression checks pass; documented accessors covered by tests.
 
-Milestone 4 — Visualization refactored onto the public contract (Month 5–7). Deliverable: the existing plots re-expressed as consumers of the standardized object through the documented contract, so figures are derived from the result schema rather than from internal state. Acceptance: rendered figures match the frozen graphical corpus; no plotting code reads undocumented internals.
+Milestone 4 — Visualization refactored onto the public standardized result object (Month 5–7). Rebuild the plots so they use only the new result object. Acceptance: rendered figures match the frozen graphical corpus; no plotting code reads undocumented internals.
 
-Milestone 5 — Backward-compatibility and deprecation path (Month 6–8). Deliverable: the historical load() |> effect_size() |> dabest_plot() workflow preserved via a compatibility layer over the new architecture, with a documented, warning-based deprecation path for any interface that changes. As a concrete first application of the cleaner design, the delta–delta input interface is simplified. Acceptance: existing user scripts and the current tutorials run unmodified; migration guide published.
+Milestone 5 — Backward-compatibility and deprecation path (Month 6–8). Keep existing scripts running, with clear warnings before anything is retired. Simplify the delta–delta input. Acceptance: existing user scripts and the current tutorials run unmodified; migration guide published.
 
-Milestone 6 — Documentation, maintenance infrastructure, and CRAN release (Month 8–9).Deliverable: an overhauled documentation front end (a proper introductory abstract for the nbdev-derived docs, which currently begin abruptly), a website changelog page, a migration guide, a contributor guide describing the new architecture, corrected terminology in tutorials (SD vs SEM/BSE), and a CRAN release. Acceptance: package on CRAN; docs and changelog live; contributor guide published.
+Milestone 6 — Documentation, maintenance infrastructure, and CRAN release (Month 8–9). Improve the docs, add a changelog and contributor guide, fix SD vs SEM/BSE wording in tutorials, and release on CRAN. Acceptance: package on CRAN; docs and changelog live; contributor guide published.
 
 
 ## Other aspects
