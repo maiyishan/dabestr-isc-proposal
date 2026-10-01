@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-30">
+<meta name="dcterms.date" content="2026-10-01">
 
 <title>Modernization of dabestr</title>
 <style>
@@ -2228,7 +2228,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-09-30</p>
+      <p class="date">2026-10-01</p>
     </div>
   </div>
   
@@ -2249,7 +2249,7 @@ It should be a comprehensive high-level overview that captures the essence of th
 -->
 <p>dabestr is the principal R implementation of estimation statistics, a data-analysis framework that reports effect sizes and confidence intervals in place of null-hypothesis significance testing. It is on CRAN and developed openly on GitHub, and implements methods described in two papers from our group <span class="citation" data-cites="ho2019 lu2026">(<a href="#ref-ho2019" role="doc-biblioref">Ho et al. 2019</a>; <a href="#ref-lu2026" role="doc-biblioref">Lu et al. 2026</a>)</span>. It has grown from two-group mean differences into a package spanning repeated measures, delta–delta (2×2) designs, mini-meta analysis, and binary proportions.</p>
 <p>That growth has outpaced the original architecture. Statistical concepts are encoded implicitly across the arguments of one entry-point function, a set of design flags, and a heterogeneous result object that the plotting layer inspects directly. The package works, but is increasingly hard to extend, test, and integrate with the R ecosystem.</p>
-<p><strong>Proposal.</strong> A focused modernization: a documented, standardized, composable estimation-result object (built on S7), separation of computation from visualization and making underlying statistical objects available to other plotting libraries, such as ggplot, and full backward compatibility. No new statistical methodology is proposed; consolidating the engineering keeps scientific risk low and yields infrastructure other R packages can build on.</p>
+<p><strong>Proposal.</strong> A focused modernization: a documented, standardized, composable estimation-result object (built on S7), separation of computation from visualization and making underlying statistical objects available to other plotting libraries such as ggplot, and full backward compatibility. No new statistical methodology is proposed; consolidating the engineering keeps scientific risk low and yields infrastructure other R packages can build on.</p>
 <p><strong>Deliverables (6 milestones, 9 months).</strong> (1) architecture specification and result-object schema; (2) frozen regression corpus in CI; (3) standardized result object with tidy accessors; (4) plots refactored onto the public contract; (5) backward-compatibility layer, deprecation path, and simplified delta–delta interface; (6) documentation, contributor guide, and CRAN release. Budget: USD $10,000, all developer labor, allocated by milestone and paid on the ISC’s standard 50%/50% schedule.</p>
 </section>
 <section id="signatories" class="level1">
@@ -2272,7 +2272,7 @@ go? Briefly describe all participants and the skills they will bring
 to the project. Include public artifacts such as code repositories to
 show their tack record.
 -->
-<p>dabestr is developed by the Claridge-Chang lab (ACCLAB) at Duke-NUS Medical School and collaborators, who authored the methods it implements and also maintain DABEST-Python and estimationstats.com. One primary developer (about 0.4 FTE over 9 months) will come from the existing maintainer team, with design review and statistical validation from the co-applicants at no cost to the grant.</p>
+<p>dabestr is developed by the Claridge-Chang lab (ACCLAB) at Duke-NUS Medical School and collaborators, who authored the methods it implements and also maintain DABEST-Python and estimationstats.com. One primary developer will come from the existing maintainer team, with design review and statistical validation from the co-applicants at no cost to the grant.</p>
 <p>Track record: github.com/ACCLAB/dabestr (CRAN), github.com/ACCLAB/DABEST-Python, estimationstats.com, and the two papers in References <span class="citation" data-cites="ho2019 lu2026">(<a href="#ref-ho2019" role="doc-biblioref">Ho et al. 2019</a>; <a href="#ref-lu2026" role="doc-biblioref">Lu et al. 2026</a>)</span>.</p>
 </section>
 <section id="contributors" class="level2">
@@ -2308,14 +2308,13 @@ It is important to cover:
  - [ ] Brief summary of existing work and previous attempts (e.g., relevant R packages)
  - [ ] If proposing changes to R itself: letter of support from R Core member
 -->
-<p>Estimation statistics has become a mainstream alternative to significance testing across life sciences and behavioural sciences, reinforced by journal policy changes and a growing tool ecosystem. dabestr provides a key avenue for R users to conduct estimation analyses and produce estimation plots. But the package exposes no stable, documented representation of an estimation result. A completed analysis is a large list carrying, simultaneously, raw data, comparison indices, control/test summaries, bootstrap and permutation results, design flags, and plotting configuration (labels, limits, colour mappings). The same object serves as analysis specification, results container, data carrier, design record, and plot configuration all at once.</p>
+<p>Estimation statistics has become a mainstream alternative to significance testing across life sciences and behavioural sciences, reinforced by journal policy changes and a growing tool ecosystem. dabestr provides a key avenue for R users to conduct estimation analyses and produce estimation plots. However, the package does not provide a stable, documented representation of an estimation result for access to other libraries. A completed analysis is a large list carrying, simultaneously, raw data, comparison indices, control/test summaries, bootstrap and permutation results, design flags, and plotting configuration (labels, limits, colour mappings). The same object serves as analysis specification, results container, data carrier, design record, and plot configuration all at once.</p>
 <p>Two structural consequences follow:</p>
 <p><strong>1. Data loading, experimental design, and analysis configuration are collapsed into one entry point.</strong> The load() function now encodes grouping structure, comparison structure (idx), paired/repeated-measures design, subject identifiers, proportional outcomes, mini-meta analysis, and delta–delta analysis. Each new method has historically been added as another argument, flag, or specialized code path rather than as an explicit component of a shared model.</p>
-<p><strong>2. Visualization is coupled to internal statistical state.</strong> The plotting layer branches on whether an analysis is delta–delta or mini-meta, on the number and structure of comparison groups, and on other design-specific fields, then assembles the panels accordingly. Presentation logic therefore depends on knowledge of the internal object rather than on a documented statistical object.</p>
+<p><strong>2. Visualization is coupled to internal statistical state.</strong> The plotting layer branches on whether an analysis is delta–delta or mini-meta, on the number and structure of comparison groups, and on other design-specific fields, then assembles the panels accordingly. Presentation logic therefore depends on knowledge of the internal object rather than on a documented, publically accessible statistical object.</p>
 <section id="why-is-it-a-problem-and-who-does-it-affect" class="level3">
 <h3 class="anchored" data-anchor-id="why-is-it-a-problem-and-who-does-it-affect">Why is it a problem, and who does it affect?</h3>
 <p>Users cannot reliably program against results — extracting effect sizes, intervals, or bootstrap distributions for downstream reporting means reaching into undocumented internal structure that can change between releases.</p>
-<p>The maintainers face rising per-feature cost. Our own roadmap illustrates this directly: delta–delta alone has accumulated three separate open requests (simplify its input interface; support a “multiplex” form; support pooled variance between control and test groups). Each currently implies bespoke input handling and plotting logic. This is an example of the pattern of feature accumulation.</p>
 <p>The wider R ecosystem cannot easily process estimation results. Because there is no standardized, tidy-friendly result object, alternative or ggplot2-native plotting layers, report-generation tools, and other statistical packages cannot build on dabestr output without depending on its internals.</p>
 </section>
 <section id="what-will-solving-it-enable" class="level3">
@@ -2346,7 +2345,7 @@ section.
 
 Include concrete actions you will take and estimated timeline.
 -->
-<p>We separate the entangled layers of the package (data → design → contrast/estimand → resampling/inference → presentation) into explicit, documented components and reconnect them through a stable contract. Scope is architecture and interface, not new methods. A defining advantage is that the correct behaviour already exists: for every supported design and estimand we can freeze current point estimates, bootstrap distributions, confidence intervals, permutation results, and graphical semantics, and require the modernized code to reproduce them. This removes most scientific risk and makes each milestone objectively checkable. The community gains a stable, tidy-friendly interface to estimation results, a lower barrier to building on dabestr, and a faster path to long-requested features.</p>
+<p>We separate the entangled layers of the package (data → design → contrast/estimand → resampling/inference → presentation) into explicit, documented components. Scope is architecture and interface, not new methods. A defining advantage is that the correct behaviour already exists: for every supported design and estimand we can freeze current point estimates, bootstrap distributions, confidence intervals, permutation results, and graphical semantics, and require the modernized code to reproduce them. This removes most scientific risk and makes each milestone objectively checkable. The community gains a stable, tidy-friendly interface to estimation results, a lower barrier to building on dabestr, and a faster path to long-requested features.</p>
 </section>
 <section id="detail" class="level2">
 <h2 class="anchored" data-anchor-id="detail">Detail</h2>
@@ -2400,7 +2399,6 @@ important because projects need to get up and running quickly.
  - [ ] License decisions
  - [ ] Reporting framework
 -->
-<p>The project separates the currently-entangled layers of the package — data → design → contrast/estimand → resampling/inference → presentation — into explicit, documented components, then reconnects them through a stable contract. We deliberately scope the work to architecture and interface, not new statistical methods.</p>
 <p>dabestr already exists as a full package and Github repository, so the project can be started straight away. A defining advantage is that the correct behaviour already exists. The current package is a rich regression specification: for every supported design and estimand we can freeze current point estimates, bootstrap distributions, confidence intervals, permutation results, and graphical semantics, and require the modernized code to reproduce them. This removes most of the scientific risk and makes each milestone objectively checkable.</p>
 </section>
 <section id="technical-delivery" class="level2">
@@ -2412,12 +2410,12 @@ provide at least a high-level description of the implementation.
 Including target dates is really important as you need to be committed
 and the ISC need to have a means of tracking delivery
 -->
-<p>Milestone 1 — Architecture specification and result-object schema (Month 1–2). Deliverable: a public design document (published to the package website and opened as an RFC issue) specifying (a) the separation of design, contrast, estimate, and analysis concepts; (b) the fields, classes, and accessor methods of a standardized result object (implemented with the S7 class system); and (c) the documented contract between analysis output and visualization input. Acceptance: design document merged; community comment period opened; committee-visible.</p>
-<p>Milestone 2 — Reference regression corpus (Month 2–3). Deliverable: a frozen corpus of current outputs across all supported designs and estimands (two-group, repeated measures, delta–delta, mini-meta, proportions), covering point estimates, bootstrap distributions, CIs, permutation results, and key graphical semantics, wired into CI. Acceptance: corpus reproducible from a tagged commit; CI green.</p>
-<p>Milestone 3 — Standardized result object with decoupled computation (Month 3–5). Deliverable: the estimation-result object implemented, with computation producing it independently of any plotting concern; public accessors for effect sizes, intervals, and resampling distributions returning tidy data. Acceptance: all Milestone-2 regression checks pass; documented accessors covered by tests.</p>
-<p>Milestone 4 — Visualization refactored onto the public contract (Month 5–7). Deliverable: the existing plots re-expressed as consumers of the standardized object through the documented contract, so figures are derived from the result schema rather than from internal state. Acceptance: rendered figures match the frozen graphical corpus; no plotting code reads undocumented internals.</p>
-<p>Milestone 5 — Backward-compatibility and deprecation path (Month 6–8). Deliverable: the historical load() |&gt; effect_size() |&gt; dabest_plot() workflow preserved via a compatibility layer over the new architecture, with a documented, warning-based deprecation path for any interface that changes. As a concrete first application of the cleaner design, the delta–delta input interface is simplified. Acceptance: existing user scripts and the current tutorials run unmodified; migration guide published.</p>
-<p>Milestone 6 — Documentation, maintenance infrastructure, and CRAN release (Month 8–9).Deliverable: an overhauled documentation front end (a proper introductory abstract for the nbdev-derived docs, which currently begin abruptly), a website changelog page, a migration guide, a contributor guide describing the new architecture, corrected terminology in tutorials (SD vs SEM/BSE), and a CRAN release. Acceptance: package on CRAN; docs and changelog live; contributor guide published.</p>
+<p>Milestone 1 — Write the plan (Month 1–2). Write a public design document (published to the package website and opened as an RFC issue) specifying what a result contains, how to get information out of it, and how plots will use it. Acceptance: design document published; community comment period opened; committee-visible.</p>
+<p>Milestone 2 — Reference regression corpus (Month 2–3). Deliverable: Record today’s outputs (estimates, intervals, figures) for every supported analysis as automatic tests (the “regression corpus”). Acceptance: corpus reproducible from a tagged commit.</p>
+<p>Milestone 3 — Build the new standardized result object (Month 3–5). Create the new result object, separate from plotting, with simple functions that return effect sizes, intervals, and resampled data as tidy tables. Acceptance: all Milestone-2 regression checks pass; documented accessors covered by tests.</p>
+<p>Milestone 4 — Visualization refactored onto the public standardized result object (Month 5–7). Rebuild the plots so they use only the new result object. Acceptance: rendered figures match the frozen graphical corpus; no plotting code reads undocumented internals.</p>
+<p>Milestone 5 — Backward-compatibility and deprecation path (Month 6–8). Keep existing scripts running, with clear warnings before anything is retired. Simplify the delta–delta input. Acceptance: existing user scripts and the current tutorials run unmodified; migration guide published.</p>
+<p>Milestone 6 — Documentation, maintenance infrastructure, and CRAN release (Month 8–9). Improve the docs, add a changelog and contributor guide, fix SD vs SEM/BSE wording in tutorials, and release on CRAN. Acceptance: package on CRAN; docs and changelog live; contributor guide published.</p>
 </section>
 <section id="other-aspects" class="level2">
 <h2 class="anchored" data-anchor-id="other-aspects">Other aspects</h2>
